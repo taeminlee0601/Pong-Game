@@ -2,8 +2,9 @@ import pygame
 
 BLACK = 0,0,0
 WHITE = 255,255,255
+GREY = 219,219,219
 
-def game_window(screen, left_paddle, right_paddle, SCORE_FONT, score_left, score_right):
+def game_window(screen, left_paddle, right_paddle, SCORE_FONT, score_left, score_right, ball):
     screen.fill(BLACK)
     
     center_line = pygame.Rect((screen.get_width()/2 - 5, 0), (10, screen.get_height()))
@@ -18,6 +19,7 @@ def game_window(screen, left_paddle, right_paddle, SCORE_FONT, score_left, score
     pygame.draw.rect(screen, WHITE, bottom_line)
     pygame.draw.rect(screen, WHITE, left_paddle)
     pygame.draw.rect(screen, WHITE, right_paddle)
+    pygame.draw.rect(screen, GREY, ball.ball)
     screen.blit(right_score, (screen.get_width()/2 + 30, 20))
 
     if score_left < 10:

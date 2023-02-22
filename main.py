@@ -2,11 +2,13 @@
 This is an individual project. This game uses Python3 and pygame.
 """
 
+import time
 import pygame
 from start_window import *
 from game_window import * 
 from game_mechanics import *
 from Ball import *
+from end_window import *
 
 pygame.init()
 
@@ -21,12 +23,11 @@ WHITE = 255,255,255
 BLACK = 0,0,0
 GREY = 219,219,219
 
-score_left = 0
-score_right = 0
-
 START_FONT = pygame.font.Font('assets/bit5x5.ttf', 50)
 TITLE_FONT = pygame.font.Font('assets/bit5x5.ttf', 100)
 SCORE_FONT = pygame.font.Font('assets/bit5x5.ttf', 30)
+SCOREBOARD_FONT = pygame.font.Font('assets/bit5x5.ttf', 100)
+END_FONT = pygame.font.Font('assets/bit5x5.ttf', 30)
 
 clock = pygame.time.Clock()
 
@@ -59,13 +60,14 @@ def play_game():
     right_paddle = pygame.rect.Rect((screen.get_width() - 20, screen.get_height()/2 - 50), (10,100))
     ball = Ball(screen)
 
-    end_score = 10
+    score_left = 0
+    score_right = 0
 
     while run:
         clock.tick(FPS)
 
         if score_left == 10 or score_right == 10:
-            end_game()
+            end_game(score_left, score_right)
 
         right_paddle.x = screen.get_width() - 20
         
@@ -100,19 +102,26 @@ def play_game():
 
         game_window(screen, left_paddle, right_paddle, SCORE_FONT, score_left, score_right, ball)
 
-def end_game():
+def end_game(score_left, score_right):
     run = True
 
     while run:
         clock.tick(FPS)
+
+        if score_left > score_right:
+            winner = 1
+        else:
+            winner = 2
+
+        end_window(screen, SCOREBOARD_FONT, END_FONT, score_left, score_right, winner)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
 
             if event.type == pygame.KEYDOWN:
+                time.sleep(0.2)
                 play_game()
-
 
 if __name__ == "__main__":
     start()

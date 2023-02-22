@@ -85,6 +85,11 @@ def play_game():
                 score_right += 1
 
             ball.new_round(screen)
+
+            time.sleep(1)
+
+            left_paddle.y = screen.get_height()/2 - 50
+            right_paddle.y = screen.get_height()/2 - 50
         else:
             check = ball.check_collision(left_paddle, right_paddle, top_line, bottom_line)
             
